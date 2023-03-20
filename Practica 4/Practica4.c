@@ -6,7 +6,15 @@
 // Programa que simula una Unidad Aritmetica y Logica de 32 bits que realiza las operaciones de:
 // AND, OR, ADICION, SUSTRACCION, IGUALDAD, MENOR QUE
 
-// Compuerta Logica AND , suma dos bits
+// Compuerta Logica AND , suma de n bits
+int and(int a, int b){
+    return a & b;
+}
+
+// Compuerta Logica OR , suma de n bits
+int or(int a, int b){
+    return a | b;
+}
 
 
 
@@ -71,56 +79,94 @@ int multiplicacion_8bits(int a, int b){
 }
 
 
+// Funcion de Igualdad de Bits
+// Verifica que un numero n de bits sea igual a otro numero m de bits
+int igualdad_bits(int a, int b){
+    int resultado = 0;
+    for(int i = 0; i < 8; i++){
+        resultado = resultado | ((a & 1) ^ (b & 1));
+        a = a >> 1;
+        b = b >> 1;
+    }
+    return resultado;
+}
 
-/* 
-
-*/
-
+// Funcion Menor Que 
+// Verifica que un numero n de bits sea menor que otro numero m de bits
+// Notemos que con bits nos referimos a solo 0 y 1 
+int menor_que(int a, int b){
+    int resultado = 0;
+    for(int i = 0; i < 8; i++){
+        resultado = resultado | ((a & 1) ^ (b & 1));
+        a = a >> 1;
+        b = b >> 1;
+    }
+    return resultado;
+}
 
 int main(int argc, char *argv[ ]){
-
-    // OpA OpB op
-
+    // Funcion Main que cumple el rol de la ALU
+    // La ALU recibe 3 argumentos, el primero y el segundo son los operandos y el tercero es la operacion a realizar
+    // Los codigos de las operaciones a realizar son las siguientes:
     // op 000 AND
     // op 001 OR
     // op 010 ADICION
     // op 011 SUSTRACCION
     // op 100 IGUALDAD
     // op 101 MENOR QUE
+    // ./Practica4 00111111100000000000000000000000  00111111100000000000000000000000 001
 
 
-    if(argc < 3){
+    // Uso del programa: 
+    // Compilar con: gcc -o Practica4 Practica4.c -lm
+    // Una vez compilado ejecutar con por ejemplo: ./Practica4 00000001 00000001 000
+
+    // Verificamos que se hayan introducido los argumentos necesarios
+    if(argc < 4){
         printf("Error: no se han introducido los argumentos necesarios");
         printf("\n");
         return 1;
-    }else if(argv[1][0] == 'A'){
-        float datos[argc-2];
-        for(int i = 2; i < argc; i++){
-            datos[i-2] = atof(argv[i]);
-        }
-        printf("La media aritmetica es: %f", media_aritmetica(datos, argc-2));
+    }else if(argv[3][0] == '0' && argv[3][1] == '0' && argv[3][2] == '0'){
+        // AND
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf("El resultado de la operacion AND es: %d", and(a, b));
         printf("\n");
-    }else if(argv[1][0] == 'H'){
-        float datos[argc-2];
-        for(int i = 2; i < argc; i++){
-            datos[i-2] = atof(argv[i]);
-        }
-        printf("La media armonica es: %f", media_armonica(datos, argc-2));
+    }else if(argv[3][0] == '0' && argv[3][1] == '0' && argv[3][2] == '1'){
+        // OR
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf("El resultado de la operacion OR es: %d", or(a, b));
         printf("\n");
-    }else if(argv[1][0] == 'G'){
-        float datos[argc-2];
-        for(int i = 2; i < argc; i++){
-            datos[i-2] = atof(argv[i]);
-        }
-        printf("La media geometrica es: %f", media_geometrica(datos, argc-2));
+    }else if(argv[3][0] == '0' && argv[3][1] == '1' && argv[3][2] == '0'){
+        // ADICION
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf("El resultado de la operacion ADICION es: %d", suma_8bits(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '0' && argv[3][1] == '1' && argv[3][2] == '1'){
+        // SUSTRACCION
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf("El resultado de la operacion SUSTRACCION es: %d", sustraccion(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '1' && argv[3][1] == '0' && argv[3][2] == '0'){
+        // IGUALDAD
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf("El resultado de la operacion IGUALDAD es: %d", igualdad_bits(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '1' && argv[3][1] == '0' && argv[3][2] == '1'){
+        // MENOR QUE
+        int a = atoi(argv[1]);
+        int b = atoi(argv[2]);
+        printf("El resultado de la operacion MENOR QUE es: %d", menor_que(a, b));
         printf("\n");
     }else{
-        printf("Opcion no valida");
+        printf("Error: no se ha introducido una operacion valida");
         printf("\n");
+        return 1;
     }
-
-
-    
 
     return 0;
 }
