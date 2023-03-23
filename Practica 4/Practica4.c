@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 // Pracica 4
 // Programa que simula una Unidad Aritmetica y Logica de 32 bits que realiza las operaciones de:
@@ -11,28 +12,28 @@
 
 // Compuerta Logica AND , suma de n bits
 char and(char a[], char b[]){
-    char resultado [];
+    char resultado[] = "";
     for(int i = 0; i<31; i++){
         if (a[i] == '1' && b[i] == '1'){
-            strcat(resultado, '1');
+            strcat(resultado, "1");
         } else{
-            strcat(resultado, '0');
+            strcat(resultado, "0");
         }
     }
-    return resultado;
+    return *resultado;
 }
 
 // Compuerta Logica OR , suma de n bits
 char or(char a[], char b[]){
-    char resultado [];
+    char resultado [] = "";
     for(int i = 0; i<31; i++){
         if (a[i] == '1' || b[i] == '1'){
-            strcat(resultado, '1');
+            strcat(resultado, "1");
         } else{
-            strcat(resultado, '0');
+            strcat(resultado, "0");
         }
     }
-    return resultado;
+    return *resultado;
 }
 
 // Adicion de n bits 
@@ -58,35 +59,35 @@ for(int i = 31; i>-1; i--){
         }
 */
 char adicion(char a[], char b[]){
-    char resultado [];
+    char resultado [] = "";
     bool acarreo = false;
     for(int i = 31; i>-1; i--){
         if (a[i] == '0'){
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, '0');
+                strcat(resultado, "0");
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, '0');
+                strcat(resultado, "0");
                 continue;
             }
-            strcat(resultado, '1');
+            strcat(resultado, "1");
             acarreo = false;
         } else{
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, '1');
+                strcat(resultado, "1");
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, '1');
+                strcat(resultado, "1");
                 continue;
             }
-            strcat(resultado, '0');
+            strcat(resultado, "0");
             acarreo = true;
         }
         
     }
-    return resultado;
+    return *resultado;
 }
 
 
@@ -97,35 +98,35 @@ char adicion(char a[], char b[]){
 // para obtener las sustraccion, la ALU debe de llevar a cabo la operacion A + (B^) + 1, en donde B^ es la entrada
 // B con todos sus bits negados.
 char sustraccion(char a[], char b[]){
-    char resultado [];
+    char resultado [] = "";
     bool acarreo = true;
     for(int i = 31; i>-1; i--){
         if (a[i] == '0'){
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, '0');
+                strcat(resultado, "0");
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, '0');
+                strcat(resultado, "0");
                 continue;
             }
-            strcat(resultado, '1');
+            strcat(resultado, "1");
             acarreo = false;
         } else{
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, '1');
+                strcat(resultado, "1");
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, '1');
+                strcat(resultado, "1");
                 continue;
             }
-            strcat(resultado, '0');
+            strcat(resultado, "0");
             acarreo = true;
         }
         
     }
-    return resultado;
+    return *resultado;
 }
 
 
@@ -142,10 +143,10 @@ char verdadero[32] = "10000000000000000000000000000000";
 char menor_que(char a[], char b[]){
     for(int i = 0; i<31; i++){
         if(a[i] == b[i]) continue;
-        if(a[i] == 0) return verdadero;
-        return falso;
+        if(a[i] == 0) return *verdadero;
+        return *falso;
     }
-    return falso;
+    return *falso;
 }
 
 // Funcion de Igualdad de Bits
@@ -154,9 +155,9 @@ char menor_que(char a[], char b[]){
 char igualdad(char a[], char b[]){
     for(int i = 0; i<31; i++){
         if (a[i] == b[i]) continue;
-        return falso;
+        return *falso;
     }
-    return verdadero;
+    return *verdadero;
 }
 
 
