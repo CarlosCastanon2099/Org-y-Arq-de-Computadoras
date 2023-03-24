@@ -80,29 +80,28 @@ void sustraccion(char a[], char b[], char *final){
     bool acarreo = true;
     for(int i = 31; 0 < i; i--){
         if (a[i] == '0'){
-            if (b[i] == '0' && !acarreo){
+            if (b[i] == '1' && !acarreo){
                 resultado[i] = '0';
-                continue;
+                continue ;
             }
-            if (b[i] == '1' && acarreo){
+            if (b[i] == '0' && acarreo){
                 resultado[i] = '0';
                 continue;
             }
             resultado[i] = '1';
             acarreo = false;
         } else{
-            if (b[i] == '0' && !acarreo){
+            if (b[i] == '1' && !acarreo){
                 resultado[i] = '1';
                 continue;
             }
-            if (b[i] == '1' && acarreo){
+            if (b[i] == '0' && acarreo){
                 resultado[i] = '1';
                 continue;
             }
             resultado[i] = '0';
             acarreo = true;
         }
-        
     }
     strcpy(final, resultado);
 }
