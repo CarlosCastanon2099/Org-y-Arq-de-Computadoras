@@ -11,62 +11,61 @@
 // Por lo que procedemos a programarlo en C
 
 // Compuerta Logica AND , suma de n bits
-char and(char a[], char b[]){
-    char resultado[] = "";
-    for(int i = 0; i<31; i++){
+void and(char a[], char b[], char *final){
+    char resultado[32];
+    for(int i = 0; i<32; i++){
         if (a[i] == '1' && b[i] == '1'){
-            strcat(resultado, "1");
+            resultado[i] = '1';
         } else{
-            strcat(resultado, "0");
+            resultado[i] = '0';
         }
     }
-    return *resultado;
+    strcpy(final, resultado);
 }
 
 // Compuerta Logica OR , suma de n bits
-char or(char a[], char b[]){
-    char resultado [] = "";
-    for(int i = 0; i<31; i++){
+void or(char a[], char b[], char *final){
+    char resultado[32];
+    for(int i = 0; i<32; i++){
         if (a[i] == '1' || b[i] == '1'){
-            strcat(resultado, "1");
+            resultado[i] = '1';
         } else{
-            strcat(resultado, "0");
+            resultado[i] = '0';
         }
     }
-    return *resultado;
+    strcpy(final, resultado);
 }
 
 // adicion de n bits
-char adicion(char a[], char b[]){
-    char resultado [] = "";
+void adicion(char a[], char b[], char *final){
+    char resultado [32];
     bool acarreo = false;
-    for(int i = 31; i>-1; i--){
+    for(int i = 31; 0 < i; i--){
         if (a[i] == '0'){
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, "0");
-                continue;
+                resultado[i] = '0';
+                continue ;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, "0");
+                resultado[i] = '0';
                 continue;
             }
-            strcat(resultado, "1");
+            resultado[i] = '1';
             acarreo = false;
         } else{
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, "1");
+                resultado[i] = '1';
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, "1");
+                resultado[i] = '1';
                 continue;
             }
-            strcat(resultado, "0");
+            resultado[i] = '0';
             acarreo = true;
         }
-        
     }
-    return *resultado;
+    strcpy(final, resultado);
 }
 
 
@@ -76,36 +75,36 @@ char adicion(char a[], char b[]){
 // esto es, para obtener A − B sumaremos al minuendo A el inverso aditivo del sustraendo B.
 // para obtener las sustraccion, la ALU debe de llevar a cabo la operacion A + (B^) + 1, en donde B^ es la entrada
 // B con todos sus bits negados.
-char sustraccion(char a[], char b[]){
-    char resultado [] = "";
+void sustraccion(char a[], char b[], char *final){
+    char resultado[32];
     bool acarreo = true;
-    for(int i = 31; i>-1; i--){
+    for(int i = 31; 0 < i; i--){
         if (a[i] == '0'){
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, "0");
+                resultado[i] = '0';
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, "0");
+                resultado[i] = '0';
                 continue;
             }
-            strcat(resultado, "1");
+            resultado[i] = '1';
             acarreo = false;
         } else{
             if (b[i] == '0' && !acarreo){
-                strcat(resultado, "1");
+                resultado[i] = '1';
                 continue;
             }
             if (b[i] == '1' && acarreo){
-                strcat(resultado, "1");
+                resultado[i] = '1';
                 continue;
             }
-            strcat(resultado, "0");
+            resultado[i] = '0';
             acarreo = true;
         }
         
     }
-    return *resultado;
+    strcpy(final, resultado);
 }
 
 
@@ -116,27 +115,35 @@ char falso[32] = "00000000000000000000000000000000";
 // Arreglo de 32 unos para decir que algo es true
 char verdadero[32] = "10000000000000000000000000000000";
 
+// Arreglo de 32 para dar el resultado final
+char final [32];
+
 // Funcion Menor Que 
 // Verifica que un numero n de bits sea menor que otro numero m de bits
 // Notemos que con bits nos referimos a solo 0 y 1 
-char menor_que(char a[], char b[]){
-    for(int i = 0; i<31; i++){
+void menor_que(char a[], char b[], char *final){
+    for(int i = 0; i<32; i++){
         if(a[i] == b[i]) continue;
-        if(a[i] == 0) return *verdadero;
-        return *falso;
+        if(a[i] == 0){
+            strcpy(final, falso);
+            return;
+        };
+        strcpy(final, falso);
+        return;
     }
-    return *falso;
+    strcpy(final, falso);
 }
 
 // Funcion de Igualdad de Bits
 // Verifica que un numero n de bits sea igual a otro numero m de bits
 // Notemos que con bits nos referimos a solo 0 y 1
-char igualdad(char a[], char b[]){
-    for(int i = 0; i<31; i++){
+void igualdad(char a[], char b[], char *final){
+    for(int i = 0; i<32; i++){
         if (a[i] == b[i]) continue;
-        return *falso;
+        strcpy(final, falso);
+        return;
     }
-    return *verdadero;
+    strcpy(final, verdadero);
 }
 
 
@@ -182,33 +189,33 @@ int main(int argc, char *argv[ ]){
     // Verificacion de que se ha introducido una operacion valida
     if(operacion[0] == '0' && operacion[1] == '0' && operacion[2] == '0'){
         // AND
-        *resultado = and(a, b);
-        printf(resultado);
+        and(a, b, final);
+        printf("Resultado de la AND:%s", final);
         printf("\n");
     }else if(operacion[0] == '0' && operacion[1] == '0' && operacion[2] == '1'){
         // OR
-        *resultado = or(a, b);
-        printf(resultado);
+        or(a, b, final);
+        printf("Resultado del OR:%s", final);
         printf("\n");
     }else if(operacion[0] == '0' && operacion[1] == '1' && operacion[2] == '0'){
         // ADICION
-        *resultado = adicion(a, b);
-        printf(resultado);
+        adicion(a, b, final);
+        printf("Resultado de la Adiccion:%s", final);
         printf("\n");
     }else if(operacion[0] == '0' && operacion[1] == '1' && operacion[2] == '1'){
         // SUSTRACCION
-        *resultado = sustraccion(a, b);
-        printf(resultado);
+        sustraccion(a, b, final);
+        printf("Resultado de la sustraccion:%s", final);
         printf("\n");
     }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '0'){
         // IGUALDAD
-        *resultado = igualdad(a, b);
-        printf(resultado);
+        igualdad(a, b, final);
+        printf("Resultado de la Igualdad:%s", final);
         printf("\n");
     }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '1'){
         // MENOR QUE
-        *resultado = menor_que(a, b);
-        printf(resultado);
+        menor_que(a, b, final);
+        printf("Resultado del menor que:%s", final);
         printf("\n");
     }else{
         printf("Error: no se ha introducido una operacion valida");
