@@ -36,28 +36,7 @@ char or(char a[], char b[]){
     return *resultado;
 }
 
-// Adicion de n bits 
-/*  
-for(int i = 31; i>-1; i--){
-        if (a[i] == '0'){
-         else if (a[i] == '0' && b[i] == '0' && acarreo){
-            strcat(resultado, "1");
-            acarreo = false;
-        } else if (a[i] == '0' && b[i] == '1' && !acarreo){
-            strcat(resultado, "1");
-        } else if (a[i] == '0' && b[i] == '1' && acarreo){
-            strcat(resultado, "0");
-        } else if (a[i] == '1' && b[i] == '0' && !acarreo){
-            strcat(resultado, "1");
-        } else if (a[i] == '1' && b[i] == '0' && acarreo){
-            strcat(resultado, "0");
-        } else if (a[i] == '1' && b[i] == '1' && !acarreo){
-            strcat(resultado, "0");
-            acarreo = true;
-        } else if (a[i] == '1' && b[i] == '1' && acarreo){
-            strcat(resultado, "1");
-        }
-*/
+// adicion de n bits
 char adicion(char a[], char b[]){
     char resultado [] = "";
     bool acarreo = false;
@@ -162,53 +141,7 @@ char igualdad(char a[], char b[]){
 
 
 
-/*  
-if(argc < 4){
-        printf("Error: no se han introducido los argumentos necesarios");
-        printf("\n");
-        return 1;
-    }else if(argv[3][0] == '0' && argv[3][1] == '0' && argv[3][2] == '0'){
-        // AND
-        
-        printf(and(a, b));
-        printf("\n");
-    }else if(argv[3][0] == '0' && argv[3][1] == '0' && argv[3][2] == '1'){
-        // OR
-        //int a = atoi(argv[1]);
-        //int b = atoi(argv[2]);
-        printf(or(a, b));
-        printf("\n");
-    }else if(argv[3][0] == '0' && argv[3][1] == '1' && argv[3][2] == '0'){
-        // ADICION
-        //int a = atoi(argv[1]);
-        //int b = atoi(argv[2]);
-        printf(adicion(a, b));
-        printf("\n");
-    }else if(argv[3][0] == '0' && argv[3][1] == '1' && argv[3][2] == '1'){
-        // SUSTRACCION
-        //int a = atoi(argv[1]);
-        //int b = atoi(argv[2]);
-        printf(sustraccion(a, b));
-        printf("\n");
-    }else if(argv[3][0] == '1' && argv[3][1] == '0' && argv[3][2] == '0'){
-        // IGUALDAD
-        //int a = atoi(argv[1]);
-        //int b = atoi(argv[2]);
-        printf(igualdad_bits(a, b));
-        printf("\n");
-    }else if(argv[3][0] == '1' && argv[3][1] == '0' && argv[3][2] == '1'){
-        // MENOR QUE
-        //int a = atoi(argv[1]);
-        //int b = atoi(argv[2]);
-        printf(menor_que(a, b));
-        printf("\n");
-    }else{
-        printf("Error: no se ha introducido una operacion valida");
-        printf("\n");
-        return 1;
-    }
 
-*/
 int main(int argc, char *argv[ ]){
     // Funcion Main que cumple el rol de la ALU
     // La ALU recibe 3 argumentos, el primero y el segundo son los operandos y el tercero es la operacion a realizar
@@ -221,19 +154,79 @@ int main(int argc, char *argv[ ]){
     // op 101 MENOR QUE
     // ./Practica4 00111111100000000000000000000000  00111111100000000000000000000000 001
 
-
     // Uso del programa: 
     // Compilar con: gcc -o Practica4 Practica4.c -lm
     // Una vez compilado ejecutar con por ejemplo:
     // ./Practica4 00111111100000000000000000000000  00111111100000000000000000000000 001
     // ./Practica4 00000001 00000001 000
 
-    // Declaramos nuestros operandos
-    // int a = atoi(argv[1]);
-    // int b = atoi(argv[2]);
-    // unsigned int b = 0x00000000;
+    // Verificacion de que se han introducido los argumentos necesarios
+    if(argc < 4){
+        printf("Error: no se han introducido los argumentos necesarios");
+        printf("\n");
+        return 1;
+    }
 
-    switch(argv[3]){
+    char *a = argv[1];
+    char *b = argv[2];
+    char *operacion = argv[3];
+
+    if(strlen(a)!=32 || strlen(b)!=32){
+        printf("Error: los argumentos no tienen el tamaño correcto");
+        printf("\n");
+        return 1;
+    }
+
+    char resultado[32];
+
+    // Verificacion de que se ha introducido una operacion valida
+    if(operacion[0] == '0' && operacion[1] == '0' && operacion[2] == '0'){
+        // AND
+        *resultado = and(a, b);
+        printf(resultado);
+        printf("\n");
+    }else if(operacion[0] == '0' && operacion[1] == '0' && operacion[2] == '1'){
+        // OR
+        *resultado = or(a, b);
+        printf(resultado);
+        printf("\n");
+    }else if(operacion[0] == '0' && operacion[1] == '1' && operacion[2] == '0'){
+        // ADICION
+        *resultado = adicion(a, b);
+        printf(resultado);
+        printf("\n");
+    }else if(operacion[0] == '0' && operacion[1] == '1' && operacion[2] == '1'){
+        // SUSTRACCION
+        *resultado = sustraccion(a, b);
+        printf(resultado);
+        printf("\n");
+    }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '0'){
+        // IGUALDAD
+        *resultado = igualdad(a, b);
+        printf(resultado);
+        printf("\n");
+    }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '1'){
+        // MENOR QUE
+        *resultado = menor_que(a, b);
+        printf(resultado);
+        printf("\n");
+    }else{
+        printf("Error: no se ha introducido una operacion valida");
+        printf("\n");
+        return 1;
+    }
+
+   
+
+
+
+
+   return 0;
+}
+
+
+/*  
+switch(argv[3]){
         case "000":
             and(argv[1],argv[2]);
         case "001":
@@ -249,8 +242,45 @@ int main(int argc, char *argv[ ]){
     return 0;
 
     }
-}
-/*  
+
+
+if(argc < 4){
+        printf("Error: no se han introducido los argumentos necesarios");
+        printf("\n");
+        return 1;
+    }else if(argv[3][0] == '0' && argv[3][1] == '0' && argv[3][2] == '0'){
+        // AND
+        printf(and(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '0' && argv[3][1] == '0' && argv[3][2] == '1'){
+        // OR
+        printf(or(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '0' && argv[3][1] == '1' && argv[3][2] == '0'){
+        // ADICION
+        printf(adicion(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '0' && argv[3][1] == '1' && argv[3][2] == '1'){
+        // SUSTRACCION
+        //int a = atoi(argv[1]);
+        //int b = atoi(argv[2]);
+        printf(sustraccion(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '1' && argv[3][1] == '0' && argv[3][2] == '0'){
+        // IGUALDAD
+        printf(igualdad_bits(a, b));
+        printf("\n");
+    }else if(argv[3][0] == '1' && argv[3][1] == '0' && argv[3][2] == '1'){
+        // MENOR QUE
+        printf(menor_que(a, b));
+        printf("\n");
+    }else{
+        printf("Error: no se ha introducido una operacion valida");
+        printf("\n");
+        return 1;
+    }
+
+
     11111111111111111111111111111111 complemento a2x  - 000. . . 1 = 
     11111111111111111111111111111110
 
