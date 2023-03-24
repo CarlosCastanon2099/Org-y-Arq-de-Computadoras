@@ -110,10 +110,10 @@ void sustraccion(char a[], char b[], char *final){
 
 
 // Arreglo de 32 ceros para decir que algo es false
-char falso[32] = "00000000000000000000000000000000";
+char falso[] = "00000000000000000000000000000000";
 
 // Arreglo de 32 unos para decir que algo es true
-char verdadero[32] = "10000000000000000000000000000000";
+char verdadero[] = "10000000000000000000000000000000";
 
 // Arreglo de 32 para dar el resultado final
 char final [32];
@@ -125,7 +125,7 @@ void menor_que(char a[], char b[], char *final){
     for(int i = 0; i<32; i++){
         if(a[i] == b[i]) continue;
         if(a[i] == 0){
-            strcpy(final, falso);
+            strcpy(final, verdadero);
             return;
         };
         strcpy(final, falso);
@@ -209,7 +209,7 @@ int main(int argc, char *argv[ ]){
         printf("\n");
     }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '0'){
         // IGUALDAD
-        igualdad(a, b, final);
+        igualdad(a, b, final );
         printf("Resultado de la Igualdad:%s", final);
         printf("\n");
     }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '1'){
