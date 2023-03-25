@@ -1,7 +1,7 @@
 # **Practica 4** 🎮
 
 - Pablo César Navarro Santana
-- Carlos Emilio Casta ̃non Maldonado
+- Carlos Emilio Castañon Maldonado
 
 ---
 
