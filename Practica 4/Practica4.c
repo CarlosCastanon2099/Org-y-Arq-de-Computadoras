@@ -38,9 +38,9 @@ void or(char a[], char b[], char *final){
 
 // adicion de n bits
 void adicion(char a[], char b[], char *final){
-    char resultado [32];
+    char resultado [] = "00000000000000000000000000000000";
     bool acarreo = false;
-    for(int i = 31; 0 < i; i--){
+    for(int i = 31; 0 <= i; i--){
         if (a[i] == '0'){
             if (b[i] == '0' && !acarreo){
                 resultado[i] = '0';
@@ -76,9 +76,9 @@ void adicion(char a[], char b[], char *final){
 // para obtener las sustraccion, la ALU debe de llevar a cabo la operacion A + (B^) + 1, en donde B^ es la entrada
 // B con todos sus bits negados.
 void sustraccion(char a[], char b[], char *final){
-    char resultado[32];
+    char resultado [] = "00000000000000000000000000000000";
     bool acarreo = true;
-    for(int i = 31; 0 < i; i--){
+    for(int i = 31; 0 <= i; i--){
         if (a[i] == '0'){
             if (b[i] == '1' && !acarreo){
                 resultado[i] = '0';
@@ -107,7 +107,6 @@ void sustraccion(char a[], char b[], char *final){
 }
 
 
-
 // Arreglo de 32 ceros para decir que algo es false
 char falso[] = "00000000000000000000000000000000";
 
@@ -117,21 +116,6 @@ char verdadero[] = "10000000000000000000000000000000";
 // Arreglo de 32 para dar el resultado final
 char final [32];
 
-// Funcion Menor Que 
-// Verifica que un numero n de bits sea menor que otro numero m de bits
-// Notemos que con bits nos referimos a solo 0 y 1 
-void menor_que(char a[], char b[], char *final){
-    for(int i = 0; i<32; i++){
-        if(a[i] == b[i]) continue;
-        if(a[i] == 0){
-            strcpy(final, verdadero);
-            return;
-        };
-        strcpy(final, falso);
-        return;
-    }
-    strcpy(final, falso);
-}
 
 // Funcion de Igualdad de Bits
 // Verifica que un numero n de bits sea igual a otro numero m de bits
@@ -145,6 +129,21 @@ void igualdad(char a[], char b[], char *final){
     strcpy(final, verdadero);
 }
 
+// Funcion Menor Que 
+// Verifica que un numero n de bits sea menor que otro numero m de bits
+// Notemos que con bits nos referimos a solo 0 y 1 
+void menor_que(char a[], char b[], char *final){
+    for(int i = 0; i<32; i++){
+        if(a[i] == b[i]) continue;
+        if(a[i] == '0'){
+            strcpy(final, verdadero);
+            return;
+        };
+        strcpy(final, falso);
+        return;
+    }
+    strcpy(final, falso);
+}
 
 
 
@@ -183,7 +182,6 @@ int main(int argc, char *argv[ ]){
         return 1;
     }
 
-    char resultado[32];
 
     // Verificacion de que se ha introducido una operacion valida
     if(operacion[0] == '0' && operacion[1] == '0' && operacion[2] == '0'){
@@ -204,7 +202,7 @@ int main(int argc, char *argv[ ]){
     }else if(operacion[0] == '0' && operacion[1] == '1' && operacion[2] == '1'){
         // SUSTRACCION
         sustraccion(a, b, final);
-        printf("Resultado de la sustraccion:%s", final);
+        printf("Resultado de la Sustraccion:%s", final);
         printf("\n");
     }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '0'){
         // IGUALDAD
@@ -214,7 +212,7 @@ int main(int argc, char *argv[ ]){
     }else if(operacion[0] == '1' && operacion[1] == '0' && operacion[2] == '1'){
         // MENOR QUE
         menor_que(a, b, final);
-        printf("Resultado del menor que:%s", final);
+        printf("Resultado del Menor que:%s", final);
         printf("\n");
     }else{
         printf("Error: no se ha introducido una operacion valida");
