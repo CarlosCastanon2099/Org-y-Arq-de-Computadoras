@@ -1,8 +1,9 @@
+# 3) Escribe un programa que compare 2 numeros enteros e imprima un mensaje que nos diga si son iguales o no.
 .data
-prompt1: .asciiz "Ingrese el primer número: " # mensaje para pedir el primer número
-prompt2: .asciiz "Ingrese el segundo número: " # mensaje para pedir el segundo número
-equal:   .asciiz "Los números son iguales."   # mensaje si los números son iguales
-not_equal: .asciiz "Los números son diferentes." # mensaje si los números son diferentes
+prompt1: .asciiz   "Ingrese el primer número: "   # mensaje para pedir el primer número
+prompt2: .asciiz   "Ingrese el segundo número: "  # mensaje para pedir el segundo número
+equal:   .asciiz   "Los números son iguales."     # mensaje si los números son iguales
+not_equal: .asciiz "Los números son diferentes."  # mensaje si los números son diferentes
 
     .text
     .globl main
@@ -29,28 +30,32 @@ main:
     move $t1, $v0       # guarda el segundo número en $t1
 
     # Compara los números
-    beq $t0, $t1, equal     # salta a la etiqueta equal si $t0 es igual a $t1
-    li $v0, 0               # si los números son diferentes, establece el resultado en 0
-    j print_not_equal       # salta a la etiqueta print_not_equal para imprimir el mensaje
-    li $v0, 1           # si los números son iguales, establece el resultado en 1
+    beq $t0, $t1, banderaT     # salta a la etiqueta bandera si $t0 es igual a $t1
+    bne $t0, $t1, banderaF     # salta a la etiqueta bandera si $t0 es diferente a $t1
 
-    # Imprime el mensaje correspondiente
-    j print_result
+
+banderaT:
+    li $v0, 1           # si los números son iguales, establece el resultado en 1
+    j print_equal       # imprime el mensaje de que los numeros son iguales
+    
+banderaF:
+    li $v0, 0           # si los números son diferentes, establece el resultado en 0
+    j print_not_equal   # imprime el mensaje de que los numeros no son iguales
+
+
+print_equal:
+    li $v0, 4           # carga la llamada del sistema para imprimir una cadena
+    la $a0, equal       # carga la dirección del mensaje equal en $a0
+    syscall             # imprime el mensaje
+    j end               # salta a la etiqueta end para salir del programa
+
 
 print_not_equal:
     li $v0, 4           # carga la llamada del sistema para imprimir una cadena
     la $a0, not_equal   # carga la dirección del mensaje not_equal en $a0
     syscall             # imprime el mensaje
     j end               # salta a la etiqueta end para salir del programa
-
-print_result:
-    li $v0, 4           # carga la llamada del sistema para imprimir una cadena
-    beq $v0, 1, print_equal     # salta a la etiqueta print_equal si $v0 es igual a 1
-    la $a0, not_equal   # carga la dirección del mensaje not_equal en $a0
-    j print
-print_equal:
-    la $a0, equal       # carga la dirección del mensaje equal en $a0
-    j print
+    
 
 print:
     syscall             # imprime el mensaje
