@@ -6,7 +6,7 @@ main:
   # 1) 
   # Como no encontramos otra manera de mover registros por consola, nuestra solucion fue la de que en 
   # los registros en los que no se deba usar move para moverlos, basta con usar las operaciones add y sub 
-  # para obtener un comportamiento bastnate parecido a move.
+  # para obtener un comportamiento bastante parecido a move.
   
   # Ejemplo: 
   add $v0, $t1, $zero   # copia el contenido de $t1 en $v0
