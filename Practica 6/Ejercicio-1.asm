@@ -9,8 +9,8 @@ main:
   # para obtener un comportamiento bastante parecido a move.
   
   # Ejemplo: 
-  add $v0, $t1, $zero   # copia el contenido de $t1 en $v0
-  sub $t1, $t1, $zero   # limpia el registro $t1 para que los datos solo existan en $v0
+  add $v2, $t1, $zero   # copia el contenido de $t1 en $t2
+  sub $t1, $t1, $zero   # limpia el registro $t1 para que los datos solo existan en $t2
   
   
   # termina el programa
