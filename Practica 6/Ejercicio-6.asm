@@ -6,7 +6,7 @@
 	menosuno: .float -1.0
 	dos: .float 2.0
 	cuatro: .float 4.0
-	mensaje_m: .asciiz "Introduce un valor de m: "
+	mensaje_m: .asciiz  "Introduce un valor de m: "
 	mensaje_pi: .asciiz "Pi: "   
 
 .text
@@ -22,6 +22,8 @@ main:
     	syscall                
 
     	# Inicializado de valores para calcular serie de Leibniz
+    	# Las que inciamos en 0 las usaremos para que cambien constantemente
+    	# Intuitivamente las que no son 0 las usaremos como constantes para realizar la suma de leibnz
     	move $t2,$v0       # Almacenar m en $t2
     	li   $t1,1         # Contador generico para saber en que iteracion estamos
     	l.s  $f2,cero      
@@ -43,7 +45,7 @@ loop:   # Nuestro equivalente en C de n < m, si ya terminamos nos salimos del bu
 	andi  $t3,$t1,1
 	beq   $t3,$zero,no_hemos_terminado_pipipipi
 	sub.s $f2,$f2,$f4
-	j     loop
+	j loop
 
 ya_terminamos:   
 	mul.s $f2,$f2,$f22   # Multiplicamos por 4 todo el resultado para tener nuestra aproximacion de Pi
@@ -58,6 +60,6 @@ ya_terminamos:
 
 no_hemos_terminado_pipipipi:
 	add.s $f2,$f4,$f2
-	j     loop
+	j loop
 
 
