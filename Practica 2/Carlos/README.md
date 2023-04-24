@@ -12,7 +12,7 @@
 gcc -o Practica2 Practica2.c -lm
 ```
 
-- Una vez compilado ejecutar ejecutar programa mediante la estructura:
+- Una vez compilado ejecutar el programa mediante la estructura:
 
 ```
 ./Practica2 [Bandera] [Numeros]

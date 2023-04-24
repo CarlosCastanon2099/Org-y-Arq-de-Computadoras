@@ -18,7 +18,7 @@ se debe de juntar la libreria math al script para poder usar esta libreria.
 gcc -o medias medias.c -lm
 ```
 
-- Una vez compilado ejecutar ejecutar programa mediante la estructura:
+- Una vez compilado ejecutar el programa mediante la estructura:
 
 ```
 ./medias [Bandera] [Numeros]

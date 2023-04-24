@@ -1,7 +1,11 @@
-# **Practica 4** 🎮
+# **Practica 4** 🏹
 
-- Pablo César Navarro Santana
-- Carlos Emilio Castañon Maldonado
+
+<div align="center">
+
+<b>Carlos Emilio Castañon Maldonado ~ Pablo César Navarro Santana
+
+</div>
 
 ---
 
@@ -13,7 +17,7 @@
 gcc -o Practica4 Practica4.c -lm
 ```
 
-- Una vez compilado ejecutar ejecutar programa mediante la estructura:
+- Una vez compilado ejecutar el programa mediante la estructura:
 
 ```
 ./Practica4 [arg1] [arg2] [bandera]
