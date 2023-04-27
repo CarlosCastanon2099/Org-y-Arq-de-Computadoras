@@ -22,7 +22,7 @@ main:
 
     # Pide el dividendo
     li $v0, 4           # carga la llamada del sistema para imprimir una cadena
-    la $a0, dividendo     # carga la dirección del mensaje dividendo en $a0
+    la $a0, dividendo   # carga la dirección del mensaje dividendo en $a0
     syscall             # imprime el mensaje
 
     # Lee el dividendo
