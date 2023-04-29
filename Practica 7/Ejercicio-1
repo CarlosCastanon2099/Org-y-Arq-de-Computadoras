@@ -1,8 +1,8 @@
 .data
 a: .word 5
 b: .word 4
-pregunta_1: .asciiz "Introduce un entero no negativo"
-pregunta_2: .asciiz "Introduce un entero no negativo"
+pregunta_1: .asciiz "Introduce un primer argumento: "
+pregunta_2: .asciiz "Introduce un segundo argumento: "
 resultado: .asciiz "El factorial del numero introducido es: "
 
 .text
