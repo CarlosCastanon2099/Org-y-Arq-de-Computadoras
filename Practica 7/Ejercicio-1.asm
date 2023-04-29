@@ -1,8 +1,7 @@
 # 1) Programa Misterioso
 # La funcion mist_0 de este programa se encarga de multiplicar dos numeros y mist_1 de multiplicarlos b veces 
 # Teniendo de esta forma que el programa realiza exponenciacion de a^b entonces si tenemos 4^5 = 1024
-# Tuvimos muchas dificultades para hacer el codigo con las especificaciones exactas de la practica para mantener registros como a0 y a1, pero este fue nuestro mejor intento
-# de hacer el codigo como venia en el pdf :c
+
 
 .data
 # a: .word 5
