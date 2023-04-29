@@ -40,12 +40,12 @@ main: 	# Preambulo main
  
 # mist_1 recibe como argumentos #a0 y $a1
 mist_1: # Preambulo mist_1
- 	move $s0, $a0	# Movemos el argumento al guardado temporal 0
- 	move $t0, $a1	# Movemos el argumento al guardado temporal 0
- 	li $t1, 1
+ 	move $s0, $a0	# Movemos el argumento 0 al guardado 0
+ 	move $t0, $a1	# Movemos el argumento 1 al guardado temporal 0
+ 	li $t1, 1	# Cargamos el valor 1 en el registro temporal 1 
  	
 loop_1: 
-	beqz $s0, end_1
+	beqz $s0, end_1	# Brincamos a la etiqueta end_1 para terminar las subrutinas
  	# Invocación de mist_0
  	move $a0, $t0	# Se pasa el argumento $a0
  	move $a1, $t1	# $e pasa el argumento $a1
@@ -56,6 +56,7 @@ loop_1:
  	
 end_1:	# Conclusión de mist_1
  	move $v0, $t1	# Se retorna el resultado en $v0
+ 	jr $ra
  	
 # mist_0 recibe como argumentos $a0 y $a1
 mist_0:	# Preambulo mist_0
