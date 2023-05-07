@@ -15,7 +15,10 @@ prompt: .asciiz "Inserte el comando aquí o veras!: "
 exit_msg: .asciiz "Adios popo"
 error_msg: .asciiz "Has matado a potter\n"
 accept_msg: .asciiz "Comando aceptado!!!\n"
-help_msg: .asciiz "Quién necesita ayudar? jsjsjsj\n"
+help_msg_0: .asciiz "Quién necesita ayuda? jsjsjsj\nNo es cierto, aquí tienes una lista de comandos:\njoke : Imprime un chiste aleatorio muy bueno\n"
+help_msg_1: .asciiz "song : Reproduce una canción muy cotorra :D\nrev : Pide una cadena a continuación y la regresa al revez\n"
+help_msg_2: .asciiz "rev [archivo] : lee un archivo e imprime la reversa del contenido del archivo\n"
+help_msg_3: .asciiz "cat [archivo] [archivo] : Concatena dos archivos y los imrpime en la pantalla\nexit : Termina al interprete y la diversión termina :c\n"
 
 .text 	 	
 .globl main
@@ -99,7 +102,13 @@ help_command:
 	
 	jal	 cmploop		# Vamos a verificar si la cadena es correcta
 	
-	la $a0, help_msg	# Cargamos el mensaje de help
+	la $a0, help_msg_0	# Cargamos el mensaje de help
+	syscall				# Imprimimos la salida
+	la $a0, help_msg_1	# Cargamos el mensaje de help
+	syscall				# Imprimimos la salida
+	la $a0, help_msg_2	# Cargamos el mensaje de help
+	syscall				# Imprimimos la salida
+	la $a0, help_msg_3	# Cargamos el mensaje de help
 	syscall				# Imprimimos la salida
 	j main				# Volvemos a main
 	
