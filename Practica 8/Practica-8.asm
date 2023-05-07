@@ -13,9 +13,9 @@ exit:	.asciiz "exit"
 
 prompt: .asciiz "Inserte el comando aquí o veras!: "
 exit_msg: .asciiz "Adios popo"
-error_msg: .asciiz "Has matado a potter"
-accept_msg: .asciiz "Placeholder para aceptar la cadena"
-help_msg: .asciiz "Quién necesita ayudar? jsjsjsj"
+error_msg: .asciiz "Has matado a potter\n"
+accept_msg: .asciiz "Comando aceptado!!!\n"
+help_msg: .asciiz "Quién necesita ayudar? jsjsjsj\n"
 
 .text 	 	
 .globl main
@@ -26,17 +26,19 @@ main:
 	syscall				# Imprimimos prompt
 	
 	li $v0, 8			# Cargamos instrucción para leer cadena
-	la $a0, buffer		# Cargamos el buffer donde se almacenará la cadena a leer
+	la $s0, buffer		# Cargamos el buffer donde se almacenará la cadena a leer
+	move $t0, $s0		# guardamos el contenido del buffer en s0
+	move $a0, $t0		# Colocamos al buffer en el argumento 0
 	li $a1, 81			# Establecemos el maximo de longitud de la cadena a leer
 	syscall
+
 	
-	la  $t0, buffer 	# Cargamos a t0 la dirección del buffer
-	jal help_command 		# Saltamos a cmp y guardamos el registro siguiente por si la palabra no coincide
+	jal help_command 	# Saltamos a cmp y guardamos el registro siguiente por si la palabra no coincide
 	
-	la $t1, exit
+	la $t0, exit
 	jal exit_command
 	
-	j cmpeq				# La cadena pasada, no corresponde a ningún caso, por lo tanto llamamos a error
+	j cmpne				# La cadena pasada, no corresponde a ningún caso, por lo tanto llamamos a error
 
 # Loop que compara cada char de una cadena
 # Funciona comparando cada byte en un registro, de forma similar
@@ -44,9 +46,10 @@ main:
 cmploop:
     lb  $t0, ($s0)	 	# Siguiente char de la primera cadena 
     lb  $t1, ($s1)	 	# Siguiente char de la siguiente cadena 
-    bne $t0, $t1, reset	# Si son diferentes saltamos reiniciar la cadena
 
-    beqz $t1, cmpeq 	# Si llegamos al final del string, SALTA
+    beq $t1,$zero, cmpeq# Si llegamos al final del string, SALTA
+    
+    bne $t0, $t1, reset	# Si son diferentes saltamos reiniciar la cadena
     
     addi $s0,$s0,1	 	# Apuntamos al siguiente char
     addi $s1,$s1,1	 	# Apuntamos al siguiente char de la otra
@@ -62,8 +65,9 @@ cmpne:
     
 # Reiniciamos los registros a 0 en caso de que sobren cadenas por analizar
 reset:
-	la $t0, buffer		# Volvemos a cargar lo que recibió el buffer en t0
-	move $t8 $ra		# Volvemos al main a evaluar el siguiente comando
+	la $s0, buffer		# Cargamos la dirección del buffer
+	move $t0, $s0		# Cargamos el contenido del buffer
+	move $ra, $t8		# Volvemos al main a evaluar el siguiente comando
 	jr $ra				# Volvemos al main donde lo dejamos
 
 # Las cadenas son iguales. Mandamos el mensaje         
@@ -75,7 +79,9 @@ cmpeq:
     
 exit_command:
 	move $t8 $ra 		# Guardamos el $ra en t8 por si la cadena falla
+	
 	la	$t1, exit		# Cargamos a t1 la dirección de la cadena exit
+	move $s1, $t1		# Cargamos el string en $s0
 	
 	jal	 cmploop		# Vamos a verificar si la cadena es correcta
 	
@@ -86,12 +92,14 @@ exit_command:
 	syscall
 
 help_command:
-	move $t8 $ra 		# Guardamos el $ra en t8 por si la cadena falla
-	la	$t1, help		# Cargamos a t1 la dirección de la cadena help
+	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
+	
+	la  $t1, help 		# Cargamos a $t0 la dirección del string "help" 
+	move $s1, $t1		# Cargamos el stringo en $s0
 	
 	jal	 cmploop		# Vamos a verificar si la cadena es correcta
 	
-	la $v0, help_msg	# Cargamos el mensaje de help
+	la $a0, help_msg	# Cargamos el mensaje de help
 	syscall				# Imprimimos la salida
 	j main				# Volvemos a main
 	
