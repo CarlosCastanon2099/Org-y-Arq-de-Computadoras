@@ -1,5 +1,6 @@
 .data
 buffer: .space 80 # Espacio reservado de 80 bytes para entrar la cadena de entrada
+
 # Comandos del programa:
 
 help:	.asciiz "help"
@@ -19,6 +20,11 @@ help_msg_0: .asciiz "Quién necesita ayuda? jsjsjsj\nNo es cierto, aquí tienes un
 help_msg_1: .asciiz "song : Reproduce una canción muy cotorra :D\nrev : Pide una cadena a continuación y la regresa al revez\n"
 help_msg_2: .asciiz "rev [archivo] : lee un archivo e imprime la reversa del contenido del archivo\n"
 help_msg_3: .asciiz "cat [archivo] [archivo] : Concatena dos archivos y los imrpime en la pantalla\nexit : Termina al interprete y la diversión termina :c\n"
+chistes:
+chiste_0: .asciiz "Había una vez truz                                              \n"
+chiste_1: .asciiz "El panda es el animal mas viejo... Porque esta en blanco y negro\n"
+chiste_2: .asciiz "Un día eres joven, y al otro día también porque solo paso un día\n"
+chiste_3: .asciiz "A veces es mejor caminar de pie, porque acostado no se puede ): \n"
 
 .text 	 	
 .globl main
@@ -36,10 +42,11 @@ main:
 	syscall
 
 	
-	jal help_command 	# Saltamos a cmp y guardamos el registro siguiente por si la palabra no coincide
-	
-	la $t0, exit
-	jal exit_command
+	jal help_command 	# Vemos si el caso coincide con help
+
+	jal exit_command 	# Vemos si el caso coincide con help
+
+	jal joke_command 	# Vemos si el caso coincide con help
 	
 	j cmpne				# La cadena pasada, no corresponde a ningún caso, por lo tanto llamamos a error
 
@@ -111,4 +118,22 @@ help_command:
 	la $a0, help_msg_3	# Cargamos el mensaje de help
 	syscall				# Imprimimos la salida
 	j main				# Volvemos a main
+
+joke_command:
+	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
 	
+	la  $t1, joke 		# Cargamos a $t0 la dirección del string "joke" 
+	move $s1, $t1		# Cargamos el stringo en $s0
+	
+	jal	 cmploop		# Vamos a verificar si la cadena es correcta
+	
+	la $t5, chistes		# Guardamos la dirección del separador de chistes
+	li $v0, 42			# Ponemos la instrucción del numero random
+	li $a1, 4			# Ponemos el limite del numero random
+	syscall				# Obtenemos el numero random
+	mul $a0, $a0 66		# Multiplicamos el numero random por 66 para saber cual cadena poner
+	add $t5, $t5 $a0	# La agregamos al registro de chistes para obtener nuestro chiste
+	la $a0 ($t5)		# Cargamos la cadena para imprimirla
+	li $v0, 4			# Ponemos la instrucción para imprimir strings
+	syscall				# Imprimimos el chiste
+	j main				# Volvemos a main	
