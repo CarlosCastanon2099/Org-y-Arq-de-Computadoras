@@ -65,9 +65,9 @@ main:
 	
 	jal help_command 	# Vemos si el caso coincide con help
 
-	jal exit_command 	# Vemos si el caso coincide con help
+	jal exit_command 	# Vemos si el caso coincide con exit
 
-	jal joke_command 	# Vemos si el caso coincide con help
+	jal joke_command 	# Vemos si el caso coincide con joke
 	
 	jal random_command	# Vemos si el caso coincide con random
 	
