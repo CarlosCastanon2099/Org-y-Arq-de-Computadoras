@@ -8,8 +8,10 @@ joke:	.asciiz "joke"
 song:	.asciiz "song"
 rev:	.asciiz "rev"
 cat:	.asciiz "cat"
-random: .asciiz "random"
 exit:	.asciiz "exit"
+# Extras
+music:	.asciiz "music"
+random: .asciiz "random"
 
 # Mensajes del programa:
 next_line : .asciiz "\n"
@@ -17,17 +19,31 @@ prompt: .asciiz "Inserte el comando aquí o veras!: "
 exit_msg: .asciiz "Adios popo"
 error_msg: .asciiz "Has matado a potter\n"
 accept_msg: .asciiz "Comando aceptado!!!\n"
-random_msg: .asciiz "El comando aleatorio es: "
+random_msg: .asciiz "El comando random es: "
 help_msg_0: .asciiz "Quién necesita ayuda? jsjsjsj\nNo es cierto, aquí tienes una lista de comandos:\njoke : Imprime un chiste aleatorio muy bueno\n"
 help_msg_1: .asciiz "song : Reproduce una canción muy cotorra :D\nrev : Pide una cadena a continuación y la regresa al revez\n"
 help_msg_2: .asciiz "rev [archivo] : lee un archivo e imprime la reversa del contenido del archivo\n"
-help_msg_3: .asciiz "random : Elige un comando al azar y lo ejecuta\n"
+help_msg_3: .asciiz "random : Elige un comando al azar y lo ejecuta\nmusic : Devuelve un link a una canción de youtube :D\n"
 help_msg_4: .asciiz "cat [archivo] [archivo] : Concatena dos archivos y los imrpime en la pantalla\nexit : Termina al interprete y la diversión termina :c\n"
+
 chistes:
 chiste_0: .asciiz "Había una vez truz                                              \n"
 chiste_1: .asciiz "El panda es el animal mas viejo... Porque esta en blanco y negro\n"
 chiste_2: .asciiz "Un día eres joven, y al otro día también porque solo paso un día\n"
 chiste_3: .asciiz "A veces es mejor caminar de pie, porque acostado no se puede ): \n"
+# Uno es un rickroll, pero, cual?
+chiste_4: .asciiz "https://www.youtube.com/watch?v=dQw4w9WgXcQ                     \n"
+chiste_5: .asciiz "https://www.youtube.com/watch?v=YRvOePz2OqQ                     \n"
+
+canciones: 
+cancion_0: .asciiz "https://www.youtube.com/watch?v=8SbUC-UaAxE \n"
+cancion_1: .asciiz "https://www.youtube.com/watch?v=2jKa_0xnTfU \n"
+cancion_2: .asciiz "https://www.youtube.com/watch?v=Ijk4j-r7qPA \n"
+cancion_3: .asciiz "https://www.youtube.com/watch?v=9J8nMBVJz58 \n"
+cancion_4: .asciiz "https://www.youtube.com/watch?v=dQw4w9WgXcQ \n"
+cancion_5: .asciiz "https://www.youtube.com/watch?v=fJ9rUzIMcZQ \n"
+cancion_6: .asciiz "https://www.youtube.com/watch?v=1V_xRb0x9aw \n"
+cancion_7: .asciiz "https://www.youtube.com/watch?v=gBt1jOtKz6Y \n"
 
 .text 	 	
 .globl main
@@ -42,8 +58,10 @@ main:
 	move $t0, $s0		# guardamos el contenido del buffer en s0
 	move $a0, $t0		# Colocamos al buffer en el argumento 0
 	li $a1, 81			# Establecemos el maximo de longitud de la cadena a leer
-	syscall
-
+	syscall				# Pedimos la cadena a leer
+	li $v0, 4			# Cargamos la instrucción para imprimir cadena
+	
+	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
 	
 	jal help_command 	# Vemos si el caso coincide con help
 
@@ -53,7 +71,16 @@ main:
 	
 	jal random_command	# Vemos si el caso coincide con random
 	
-	j cmpne				# La cadena pasada, no corresponde a ningún caso, por lo tanto llamamos a error
+	jal music_command	# Vemos si el caso coincide con music
+	
+# Ningún caso coincide con la cadena escrita        
+ 
+cmpne:
+    la $a0, error_msg	# Cargamos el string del error
+    li $v0, 4		 	# Cargamos la instrucción de imprimir cadena
+    syscall				# Imprimimos la cadena
+	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
+    j	 main 		 	# Volvemos al main
 
 # Loop que compara cada char de una cadena
 # Funciona comparando cada byte en un registro, de forma similar
@@ -70,13 +97,7 @@ cmploop:
     addi $s1,$s1,1	 	# Apuntamos al siguiente char de la otra
     j cmploop			# Volvemos al mismo loop pero ahora verificamos el siguiente char
 
-# Las cadenas no son iguales. Mandamos el mensaje        
- 
-cmpne:
-    la $a0, error_msg	# Cargamos el string del error
-    li $v0, 4		 	# Cargamos la instrucción de imprimir cadena
-    syscall				# Imprimimos la cadena
-    j	 main 		 	# Volvemos al main
+
     
 # Reiniciamos los registros a 0 en caso de que sobren cadenas por analizar
 reset:
@@ -126,6 +147,7 @@ help_run:
 	syscall				# Imprimimos la salida
 	la $a0, help_msg_4	# Cargamos el mensaje de help
 	syscall				# Imprimimos la salida
+	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
 	j main				# Volvemos a main
 
 joke_command:
@@ -139,14 +161,16 @@ joke_command:
 joke_run:
 	la $t5, chistes		# Guardamos la dirección del separador de chistes
 	li $v0, 42			# Ponemos la instrucción del numero random
-	li $a1, 4			# Ponemos el limite del numero random
+	li $a1, 6			# Ponemos el limite del numero random
 	syscall				# Obtenemos el numero random
 	mul $a0, $a0 66		# Multiplicamos el numero random por 66 para saber cual cadena poner
 	add $t5, $t5 $a0	# La agregamos al registro de chistes para obtener nuestro chiste
 	la $a0 ($t5)		# Cargamos la cadena para imprimirla
 	li $v0, 4			# Ponemos la instrucción para imprimir strings
 	syscall				# Imprimimos el chiste
-	j main				# Volvemos a main	
+	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
+	j main				# Volvemos a main
+	
 random_command:
 	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
 	
@@ -160,7 +184,7 @@ random_run:
 	la $a0, random_msg	# Cargamos el mensaje de random
 	syscall				# Imprimimos la salida
 	li $v0, 42			# Ponemos la instrucción del numero random
-	li $a1, 4			# Ponemos el limite del numero random
+	li $a1, 5			# Ponemos el limite del numero random
 	syscall				# Obtenemos el numero random
 	move $t5, $a0		# Guardamos el random en $t5
 	li $v0, 4			# Cargar instrucción para imprimir cadena.
@@ -168,6 +192,7 @@ random_run:
 	beqz $t5 random_help		# Saltamos al caso de help
 	beq  $t5 1 random_joke		# Saltamos al caso de joke
 	beq  $t5 2 random_random	# Saltamos al caso de random
+	beq  $t5 3 random_music		# Saltamos al caso de music
 	
 random_exit:
 	la $a0, exit		# Cargamos el mensaje de exit
@@ -193,8 +218,35 @@ random_random:
 	jal next_line_print # Saltamos a imprimir el next_line
 	j random_run		# Saltamos a la ejecurción de random
 	
+random_music:
+	la $a0, music		# Cargamos el mensaje de random
+	syscall				# Imprimimos el mensaje del comando elegido
+	jal next_line_print # Saltamos a imprimir el next_line
+	j music_run			# Saltamos a la ejecurción de random
+
 next_line_print:
 	la $a0, next_line	# Cargamos un next_line para que no se junten las cadenas
 	syscall				# Imprimimos el next_line
 	jr $ra				# Seguimos con la ejecución del random
+	
+music_command:
+	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
+	
+	la  $t1, music 		# Cargamos a $t0 la dirección del string "music" 
+	move $s1, $t1		# Cargamos el string en $s0
+	
+	jal	 cmploop		# Vamos a verificar si la cadena es correcta
+	
+music_run:
+	la $t5, canciones	# Guardamos la dirección del separador de canciones
+	li $v0, 42			# Ponemos la instrucción del numero random
+	li $a1, 8 			# Ponemos el limite del numero random
+	syscall				# Obtenemos el numero random
+	mul $a0, $a0 46		# Multiplicamos el numero random por 46 para saber cual cadena poner
+	add $t5, $t5 $a0	# La agregamos al registro de musica para obtener nuestra cancipon
+	la $a0 ($t5)		# Cargamos la cadena para imprimirla
+	li $v0, 4			# Ponemos la instrucción para imprimir strings
+	syscall				# Imprimimos la canción
+	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
+	j main				# Volvemos a main
 	
