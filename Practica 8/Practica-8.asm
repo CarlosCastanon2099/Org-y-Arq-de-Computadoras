@@ -9,6 +9,7 @@ song:	.asciiz "song"
 rev:	.asciiz "rev"
 cat:	.asciiz "cat"
 exit:	.asciiz "exit"
+maxwell:.asciiz "maxwell"
 # Extras
 music:	.asciiz "music"
 random: .asciiz "random"
@@ -25,6 +26,7 @@ help_msg_1: .asciiz "song : Reproduce una canción muy cotorra :D\nrev : Pide una
 help_msg_2: .asciiz "rev [archivo] : lee un archivo e imprime la reversa del contenido del archivo\n"
 help_msg_3: .asciiz "random : Elige un comando al azar y lo ejecuta\nmusic : Devuelve un link a una canción de youtube :D\n"
 help_msg_4: .asciiz "cat [archivo] [archivo] : Concatena dos archivos y los imrpime en la pantalla\nexit : Termina al interprete y la diversión termina :c\n"
+help_msg_5: .asciiz "??????? : Ingresa el nombre de nuestro gato favorito y admira la magia :)\n"
 
 chistes:
 chiste_0: .asciiz "Había una vez truz                                              \n"
@@ -44,6 +46,32 @@ cancion_4: .asciiz "https://www.youtube.com/watch?v=dQw4w9WgXcQ \n"
 cancion_5: .asciiz "https://www.youtube.com/watch?v=fJ9rUzIMcZQ \n"
 cancion_6: .asciiz "https://www.youtube.com/watch?v=1V_xRb0x9aw \n"
 cancion_7: .asciiz "https://www.youtube.com/watch?v=gBt1jOtKz6Y \n"
+
+# Shhhhhhhhhhh...
+M_0: .asciiz "                                                                           ..    \n"
+M_1: .asciiz "                                                                   ..::::^JB~    \n"
+M_2: .asciiz "                               .:^^~!777!^:..   .?55J7!~^^:::^!J5PGB####&&@#.    \n"
+M_3: .asciiz "                           .~?P#&&&&@@@@@@&#BGPY7~7B@@@@&&&&&&@@@@@@@&&&&&@P:    \n"
+M_4: .asciiz "                        :!5#&@@@&&&&&&@@@@@@@@@@@@&&@&&&@@@@@@@@@@@@&&&&&&&&&J.  \n"
+M_5: .asciiz "                      ^P&@@@&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@@@@@&&@@&&&&&&&&@B: \n"
+M_6: .asciiz "                     ?#@&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@@@@&&&&&&@&&&&#B#@5 \n"
+M_7: .asciiz "                   ~G@&&&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@&&&&&&&&#&##&&&&&&##&&#.\n"
+M_8: .asciiz "                  !&@&&&&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@&&&&&&&@@@@@&&&&&&&&&&G \n"
+M_9: .asciiz "                 .B@&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@@@@&&&######&&&&&&&&&&#Y^ \n"
+M_10: .asciiz "                 J@&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@&&&&&#BBGGPPPB&&&&##&B?.  \n"
+M_11: .asciiz "                 G&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@&&&&#######BPYYPGPP55J:    \n"
+M_12: .asciiz "                 P&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@@&&&&&&&&BP555555555Y!     \n"
+M_13: .asciiz "                 J&&&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@@&&&&&&&#5JJYYYYJJJY7     \n"
+M_14: .asciiz "                 !&&&&&&&&&&&&&&&&&&@@@@@@@@@@@@@@@@@@@@@&&@@@&&GY??JJJ??J5~     \n"
+M_15: .asciiz "                  5@&&&&&&&&&&&&&&&&&&@@@@@@@@@@@&@@@@@@@&@@&&&&&#PJ?????J5.     \n"
+M_16: .asciiz "                  .G@&&&&&&&&&&&&&&&&&@@@@@@@&&@@@@@@@@@&&@&&&&&&&&BY?JYP#7      \n"
+M_17: .asciiz "                   ^G@&&&&&&&&&&&&&&&&&@@@@@&&@@@@@@@@@&&&&&&&&&&&&&BYY#@B.      \n"
+M_18: .asciiz "                    .J#@@@@&&&&&&&&&&@@@@@@@&&@@@@@@@@@@@@@@@@&&&&&&P??#G:       \n"
+M_19: .asciiz "                      :7JPB#&@@@@@@@@@@@@&&&&@@@@@@@@@@@@@@@@@@&&&&@BJYB^        \n"
+M_20: .asciiz "                           :~7?J5PGB#&&@@@@@@@@@@@@@@@@@@@@@@@@&&&&&&J!:         \n"
+M_21: .asciiz "                                    .:^~!?J5B#&@@@@@@@@@@@@@@@@@@@@@G            \n"
+M_22: .asciiz "                                             :~7J5PPGB##&&&&&&&###B5!            \n"
+M_23: .asciiz "                                                     ...:^^^::::...              \n"
 
 .text 	 	
 .globl main
@@ -72,6 +100,10 @@ main:
 	jal random_command	# Vemos si el caso coincide con random
 	
 	jal music_command	# Vemos si el caso coincide con music
+	
+	jal song_command	# Vemos si el caso coincide con song
+	
+	jal maxwell_command	# Me preguntó para que sirve este caso...
 	
 # Ningún caso coincide con la cadena escrita        
  
@@ -147,6 +179,8 @@ help_run:
 	syscall				# Imprimimos la salida
 	la $a0, help_msg_4	# Cargamos el mensaje de help
 	syscall				# Imprimimos la salida
+	la $a0, help_msg_5	# Cargamos el mensaje de help
+	syscall				# Imprimimos la salida
 	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
 	j main				# Volvemos a main
 
@@ -184,7 +218,7 @@ random_run:
 	la $a0, random_msg	# Cargamos el mensaje de random
 	syscall				# Imprimimos la salida
 	li $v0, 42			# Ponemos la instrucción del numero random
-	li $a1, 5			# Ponemos el limite del numero random
+	li $a1, 6			# Ponemos el limite del numero random
 	syscall				# Obtenemos el numero random
 	move $t5, $a0		# Guardamos el random en $t5
 	li $v0, 4			# Cargar instrucción para imprimir cadena.
@@ -193,36 +227,43 @@ random_run:
 	beq  $t5 1 random_joke		# Saltamos al caso de joke
 	beq  $t5 2 random_random	# Saltamos al caso de random
 	beq  $t5 3 random_music		# Saltamos al caso de music
+	beq	 $t5 4 random_song		# Saltamos al caso de song
 	
 random_exit:
 	la $a0, exit		# Cargamos el mensaje de exit
 	syscall				# Imprimimos el mensaje del comando elegido
 	jal next_line_print # Saltamos a imprimir el next_line
-	j exit_run			# Saltamos a la ejecurción de exit
+	j exit_run			# Saltamos a la ejecución de exit
 	
 random_help:
 	la $a0, help		# Cargamos el mensaje de help
 	syscall				# Imprimimos el mensaje del comando elegido
 	jal next_line_print # Saltamos a imprimir el next_line
-	j help_run			# Saltamos a la ejecurción de exit
+	j help_run			# Saltamos a la ejecución de exit
 
 random_joke:
 	la $a0, joke		# Cargamos el mensaje de joke
 	syscall				# Imprimimos el mensaje del comando elegido
 	jal next_line_print # Saltamos a imprimir el next_line
-	j joke_run			# Saltamos a la ejecurción de joke
+	j joke_run			# Saltamos a la ejecución de joke
 	
 random_random:
 	la $a0, random		# Cargamos el mensaje de random
 	syscall				# Imprimimos el mensaje del comando elegido
 	jal next_line_print # Saltamos a imprimir el next_line
-	j random_run		# Saltamos a la ejecurción de random
+	j random_run		# Saltamos a la ejecución de random
 	
 random_music:
-	la $a0, music		# Cargamos el mensaje de random
+	la $a0, music		# Cargamos el mensaje de music
 	syscall				# Imprimimos el mensaje del comando elegido
 	jal next_line_print # Saltamos a imprimir el next_line
-	j music_run			# Saltamos a la ejecurción de random
+	j music_run			# Saltamos a la ejecución de music
+
+random_song:
+	la $a0, song		# Cargamos el mensaje de song
+	syscall				# Imrpimimos el mensaje del comando elegido
+	jal next_line_print # Saltamos a imprimir el next_line
+	j song_run			# Saltamos a la ejecución de song
 
 next_line_print:
 	la $a0, next_line	# Cargamos un next_line para que no se junten las cadenas
@@ -250,3 +291,326 @@ music_run:
 	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
 	j main				# Volvemos a main
 	
+song_command:
+	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
+	
+	la  $t1, song 		# Cargamos a $t0 la dirección del string "song" 
+	move $s1, $t1		# Cargamos el string en $s0
+	
+	jal	 cmploop		# Vamos a verificar si la cadena es correcta
+	
+# Por obvias razones, no vamos a comentar todo esto, simplemente las primeras lineas 
+song_run:
+	li $v0, 31			# Cargamos la instrucción para reproducir sonidos
+	li $a0, 74			# Establecemos la nota que reproducirímos
+	li $a1, 400			# Establecemos el tiempo que durará la nota
+	li $a2, 72			# Establecemos el instrumento que reproducirá la nota
+	li $a3, 64			# Establecemos el volumen al que se escuchará la nota
+	syscall
+	li $v0, 32
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 74
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 74
+	syscall
+	li $v0, 32
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 76
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 77
+	li $a1, 800
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 77
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 83
+	li $a1, 400
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 83
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 83
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 79
+	li $a1, 800
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 79
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 72
+	li $a1, 1600
+	syscall
+	li $v0, 32 
+	li $a0, 1600
+	syscall
+	li $v0, 31
+	li $a0, 69
+	syscall
+	li $v0, 32 
+	li $a0, 1600
+	syscall
+	li $v0, 31
+	li $a0, 76
+	syscall
+	li $v0, 32 
+	li $a0, 1600
+	syscall
+	li $v0, 31
+	li $a0, 72
+	syscall
+	li $v0, 32 
+	li $a0, 1600
+	syscall
+	li $v0, 31
+	li $a0, 74
+	li $a1, 400
+	syscall
+	li $v0, 32
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 74
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 74
+	syscall
+	li $v0, 32
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 76
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 77
+	li $a1, 800
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 77
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 83
+	li $a1, 400
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 83
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 83
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 79
+	li $a1, 800
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 79
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 81
+	li $a1, 400
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 83
+	syscall
+	li $v0, 32 
+	li $a0, 400
+	syscall
+	li $v0, 31
+	li $a0, 81
+	li $a1,	800
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 79
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 77
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	li $v0, 31
+	li $a0, 76
+	syscall
+	li $v0, 32 
+	li $a0, 800
+	syscall
+	j main				# Volvemos al main
+	
+#Shhhhhhhhhhhh, no preguntes...
+maxwell_command:
+	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
+	
+	la  $t1, maxwell 	# Cargamos a $t0 la dirección del string "maxwell" 
+	move $s1, $t1		# Cargamos el string en $s0
+	
+	jal	 cmploop		# Vamos a verificar si la cadena es correcta
+	li $v0, 4
+	la $a0, M_0
+	syscall
+	la $a0, M_1
+	syscall
+	la $a0, M_2
+	syscall
+	la $a0, M_3
+	syscall
+	la $a0, M_4
+	syscall
+	la $a0, M_5
+	syscall
+	la $a0, M_6
+	syscall
+	la $a0, M_7
+	syscall
+	la $a0, M_8
+	syscall
+	la $a0, M_9
+	syscall
+	la $a0, M_10
+	syscall
+	la $a0, M_11
+	syscall
+	la $a0, M_12
+	syscall
+	la $a0, M_13
+	syscall
+	la $a0, M_14
+	syscall
+	la $a0, M_15
+	syscall
+	la $a0, M_16
+	syscall
+	la $a0, M_17
+	syscall
+	la $a0, M_18
+	syscall
+	la $a0, M_19
+	syscall
+	la $a0, M_20
+	syscall
+	la $a0, M_21
+	syscall
+	la $a0, M_22
+	syscall
+	la $a0, M_23
+	syscall
+	j main			# Volvemos a la normalidad....
