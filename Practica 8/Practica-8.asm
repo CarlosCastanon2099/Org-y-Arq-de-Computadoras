@@ -1,5 +1,6 @@
 .data
 buffer: .space 80 # Espacio reservado de 80 bytes para entrar la cadena de entrada
+output:	.space 80 # Espacio para regresar cadenas, por ejemplo, en rev
 
 # Comandos del programa:
 
@@ -15,12 +16,13 @@ music:	.asciiz "music"
 random: .asciiz "random"
 
 # Mensajes del programa:
-next_line : .asciiz "\n"
-prompt: .asciiz "Inserte el comando aquí o veras!: "
-exit_msg: .asciiz "Adios popo"
-error_msg: .asciiz "Has matado a potter\n"
+next_line:	.asciiz "\n"
+prompt: 	.asciiz "Inserte el comando aquí o veras!: "
+exit_msg:	.asciiz "Adios popo"
+error_msg:	.asciiz "Has matado a potter\n"
 accept_msg: .asciiz "Comando aceptado!!!\n"
 random_msg: .asciiz "El comando random es: "
+rev_msg:	.asciiz "Ingrese la cadena para poner en reversa: "
 help_msg_0: .asciiz "Quién necesita ayuda? jsjsjsj\nNo es cierto, aquí tienes una lista de comandos:\njoke : Imprime un chiste aleatorio muy bueno\n"
 help_msg_1: .asciiz "song : Reproduce una canción muy cotorra :D\nrev : Pide una cadena a continuación y la regresa al revez\n"
 help_msg_2: .asciiz "rev [archivo] : lee un archivo e imprime la reversa del contenido del archivo\n"
@@ -102,6 +104,8 @@ main:
 	jal music_command	# Vemos si el caso coincide con music
 	
 	jal song_command	# Vemos si el caso coincide con song
+	
+	jal rev_command
 	
 	jal maxwell_command	# Me preguntó para que sirve este caso...
 	
@@ -218,7 +222,7 @@ random_run:
 	la $a0, random_msg	# Cargamos el mensaje de random
 	syscall				# Imprimimos la salida
 	li $v0, 42			# Ponemos la instrucción del numero random
-	li $a1, 6			# Ponemos el limite del numero random
+	li $a1, 7			# Ponemos el limite del numero random
 	syscall				# Obtenemos el numero random
 	move $t5, $a0		# Guardamos el random en $t5
 	li $v0, 4			# Cargar instrucción para imprimir cadena.
@@ -228,6 +232,7 @@ random_run:
 	beq  $t5 2 random_random	# Saltamos al caso de random
 	beq  $t5 3 random_music		# Saltamos al caso de music
 	beq	 $t5 4 random_song		# Saltamos al caso de song
+	beq  $t5 5 random_rev		# Saltamos al caso de rev
 	
 random_exit:
 	la $a0, exit		# Cargamos el mensaje de exit
@@ -261,10 +266,16 @@ random_music:
 
 random_song:
 	la $a0, song		# Cargamos el mensaje de song
-	syscall				# Imrpimimos el mensaje del comando elegido
+	syscall				# Imprimimos el mensaje del comando elegido
 	jal next_line_print # Saltamos a imprimir el next_line
 	j song_run			# Saltamos a la ejecución de song
 
+random_rev:
+	la $a0, rev			# Cargamos el mensaje de rev
+	syscall				# Imprimimos el mensaje del comando elegido
+	jal next_line_print # Saltamos a imprimir el next_line
+	j rev_run			# Saltamos a la ejecución de rev
+	
 next_line_print:
 	la $a0, next_line	# Cargamos un next_line para que no se junten las cadenas
 	syscall				# Imprimimos el next_line
@@ -290,7 +301,77 @@ music_run:
 	syscall				# Imprimimos la canción
 	jal next_line_print # Imprimimos un next_line para que se vea bien la consola
 	j main				# Volvemos a main
+
+rev_command:
+	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
 	
+	la  $t1, rev 		# Cargamos a $t0 la dirección del string "rev" 
+	move $s1, $t1		# Cargamos el string en $s0
+	
+	jal	 cmploop		# Vamos a verificar si la cadena es correcta
+rev_run:
+	li  $v0, 4 			# Cargamos instrucción para pedir una cadena
+	la	$a0, rev_msg	# Cargamos el mensaje para pedir la cadena
+	syscall				# Imprimimos el mensaje 
+	li	$v0, 8			# Preguntamos por el string a usar
+	la	$a0, buffer		# Lo guardamos en buffer
+	li	$a1, 256		# Solo son admitidos caracteres de 256
+	syscall
+	
+	jal	strlen			# Saltamos a strlen, guardamos la direccion de regreso en $ra
+	
+	add	$t1, $zero, $v0		# Establecemos a $t1 con el valor de long
+	add	$t2, $zero, $a0		# Guardamos el input en $t2
+	add	$a0, $zero, $v0		# Establecemos a $a0 con el valor de lon
+
+	
+reverse:
+	li	$t0, 0			# Iniciamos a t0 en 0
+	li	$t3, 0			# Iniciamos a t3 en 0
+	
+reverse_loop:
+	add	$t3, $t2, $t0		# $t2 es la direccion base para nuestro arreglo 'input' , agregamos el index del loop
+	lb	$t4, 0($t3)			# Cargamos un byte acorde a los encuentros
+	beqz	$t4, print_rev	# Aqui encontramos al byte nulo
+	sb	$t4, output($t1)	# Sobrescribimos ese byte en la direccion de memoria	
+	subi	$t1, $t1, 1		# Sustraemos la cadena y disminuimos en 1 (j--)
+	addi	$t0, $t0, 1		# Incrementamos nuestro contador (i++)
+	j	reverse_loop		# Bucle hasta que se cumplan las condiciones
+	
+print_rev:
+	li	$v0, 4			# Cargamos instrucción para imprimir cadena
+	la	$a0, output		# La cadena en reversa
+	syscall				# imprimimos la cadena al revez
+	jal	next_line_print # Imprimimos un next line para que se vea bien la consola
+	jal	next_line_print # Imprimimos un next line para que se vea bien la consola
+	
+	j main				# Volvemos al main
+	
+
+# strlen:
+# a0 es el input string
+# v0 regresa el length
+# Esta funcion hace un bucle sobre los caracteres del string hasta que se encuentra el byte nulo
+# El bit nulo es el caracter (0x0a) el cual ya esta almacenado por default
+
+
+strlen:
+	li	$t0, 0				# Nos aseguramos que $t0 tenga 0 guardado
+	li	$t2, 0				# Nos aseguramos que $t0 tenga 0 guardado
+	
+strlen_loop:
+	add	$t2, $a0, $t0		# Obtenemos la posición que queremos revisar
+	lb	$t1, 0($t2)			# Cargams la primera letra
+	beqz	$t1, strlen_exit# Si es el final de la cadena, terminamos y obtenemos la long de la cadena
+	addiu	$t0, $t0, 1		# Si no saltamos a la sibguiente
+	j	strlen_loop			# repetimso el loop
+		
+strlen_exit:
+	subi	$t0, $t0, 1		# Restamos 1 a la long de la cadena
+	add	$v0, $zero, $t0		# Establecemos a v0 con el valor de $t0
+	add	$t0, $zero, $zero	# Establecemos a $t0 en cero
+	jr	$ra					# volvemos al metodo de reversa
+
 song_command:
 	move $t8, $ra 		# Guardamos el $ra en t8 por si la cadena falla
 	
