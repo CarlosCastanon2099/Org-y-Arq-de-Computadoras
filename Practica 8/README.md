@@ -34,14 +34,16 @@ Inserte el comando aquí o veras!:
   - joke
   - song
   - random
+  - rev 
   - music
   - exit
   - maxwell
   
+<!---
 - Los comandos que se ejecutan con argumentos ademas de las siguientes palabras clave son: 
-  - rev [Cadena de texto a aplicar reversa]
   - rev [Archivo a aplicar reversa]
   - cat [Archivo a concatenar 1] [Archivo a concatenar 2]
+-->
   
 - Ejemplos de uso:
   
