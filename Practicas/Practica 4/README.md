@@ -1,7 +1,9 @@
+
+<div align="center">
+  
 # **Practica 4** 🏹
 
 
-<div align="center">
 
 <b>Carlos Emilio Castañon Maldonado ~ Pablo César Navarro Santana
 
