@@ -2,7 +2,7 @@
 
 <div align="center">
   
-# **Equipo Org y Arq de Computadoras - Practica 6** 💾
+# **Practica 6** 💾
 
 
 
@@ -29,7 +29,7 @@
 ---
 - Para el programa en C que calcula la Suma de Leibnz
 
-$$4 \times \left( \sum_{n=0}^m \frac{(-1)^n}{2n + 1} \right) $$
+<p align="center"><img width="400" src="/GIFS/p6/01-Suma De Leibnz.png" alt="Serie de Leibnz"></p>
 
 - Compilar mediante:
 
