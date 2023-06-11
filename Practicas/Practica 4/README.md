@@ -3,15 +3,17 @@
   
 # **Practica 4** 🏹
 
+Carlos Emilio Castañon Maldonado ~ Pablo César Navarro Santana
 
-
-<b>Carlos Emilio Castañon Maldonado ~ Pablo César Navarro Santana
+[![](https://media.giphy.com/media/QpVUMRUJGokfqXyfa1/giphy.gif)](https://www.youtube.com/watch?v=5NV6Rdv1a3I)
 
 </div>
 
 ---
 
 ## **Uso**
+
+## **Para el Programa en C**
 
 - Compilar mediante:
 
@@ -50,4 +52,35 @@ representaran los operandos en binario.
 ./Practica4 00111111100000000000000010000000  00111111100001000000000000000000 010
 ```
 
+## **Para el Archivo en Logisim**
+- Abrir el archivo .circ con Logisim
+** **
 
+</div>
+<div align="center">
+  
+# **Los circuitos presentes son:** 
+  
+Half Adder
+  
+![](https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/GIFS/p4/01-HalfAdder.gif)
+  
+Full Adder
+  
+![](https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/GIFS/p4/02-FullAdder.gif)
+  
+Sumador de 8 Bits
+  
+![](https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/GIFS/p4/03-Sumador8Bits.gif)
+  
+Restador de 8 Bits
+  
+![](https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/GIFS/p4/04-Restador8Bits.gif)
+  
+Multiplexor de el Sumador y la Resta de 8 Bits
+  
+![](https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/GIFS/p4/05-MultiplexorDeSumyRes.gif)
+
+  
+  
+</div>
