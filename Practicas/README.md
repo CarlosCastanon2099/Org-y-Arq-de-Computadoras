@@ -32,13 +32,13 @@ MARS:
 ```
 java -jar Mars4_4.jar
 ```
-En MARS es necesario ejecutarlo mediante el comando anterior para que entonces, posteriormente dentro de MARS se pueda abrir el archivo .asm que se desee ejecutar.
+En MARS es necesario ejecutarlo mediante el comando anterior para que podamos acceder a MARS y entonces podamos abrir el archivo .asm que deseemos ejecutar.
 
 
 A continuacion un ejemplo sobre como se compila y ejecuta un archivo .asm en MARS:
 
 
-[![](./GIFS/EjemploCompilacionEnMars.gif)]
+![](https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/GIFS/EjemploCompilacionEnMars.gif)
 
 
 En las practicas tambien llegamos a usar el lenguaje de programacion C, para ello se empleo el compilador [GCC](https://gcc.gnu.org/), para compilar un archivo .c basta con ejecutar el siguiente comando:
