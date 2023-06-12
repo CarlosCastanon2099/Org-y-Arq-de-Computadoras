@@ -46,7 +46,7 @@ gcc -o Ejercicio-5 Ejercicio-5.c -lm
 
 - Tendremos que m sera el numero de iteraciones de nuestro programa para calcular $\pi$
 
-- A lo que por consiguiente los siguientes ejemplos de uso:
+- A lo que por consiguiente tendremos los siguientes ejemplos de uso:
 
 ```
 > ./Ejercicio-5 
