@@ -2,7 +2,7 @@
 
 <div align="center">
   
-# **Equipo Org y Arq de Computadoras - Practica 8** 💽🛰️
+# **Practica 8** 💽🛰️
 
 
 
