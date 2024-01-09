@@ -33,13 +33,13 @@
 
 - Compilar mediante:
 
-```
+```Haskell
 gcc -o Ejercicio-5 Ejercicio-5.c -lm
 ```
 
 - Una vez compilado, ejecutar el programa mediante:
 
-```
+```Haskell
 ./Ejercicio-5 
 ```
 - Una vez compilado se nos desplegara una linea en terminal que nos pedira un valor de m.
@@ -48,19 +48,19 @@ gcc -o Ejercicio-5 Ejercicio-5.c -lm
 
 - A lo que por consiguiente tendremos los siguientes ejemplos de uso:
 
-```
+```Haskell
 > ./Ejercicio-5 
 Introduce un valor de m: 10
 Pi: 3.041839618929403
 ```
 
-```
+```Haskell
 > ./Ejercicio-5 
 Introduce un valor de m: 100000
 Pi: 3.141582653589720
 ```
 
-```
+```Haskell
 > ./Ejercicio-5 
 Introduce un valor de m: 10000000000
 Pi: 3.141592652878837
