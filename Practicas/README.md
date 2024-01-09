@@ -21,7 +21,8 @@
 Las prácticas se realizaron bajo dos enfoques, programacion de codigo y el diseño de circuitos digitales, para los circuitos hemos empleado el software [Logisim](http://www.cburch.com/logisim/), para la programacion de codigo en lenguaje ensamblador se empleo el software [MARS](http://courses.missouristate.edu/KenVollmar/mars/), ambos software son de uso libre y se pueden descargar desde sus respectivas paginas oficiales, para poder ejecutarlos basta con tener la paqueteria de [JAVA](https://www.oracle.com/java/technologies/downloads/) instalada y ejecutarlos respectivamente mediante.
 
 LOGISIM:
-```
+
+```Haskell
 java -jar logisim-generic-2.7.1.jar
 ```
 
@@ -29,7 +30,8 @@ En logisim se puede ejecutar mediante el comando anterior (o dando doble click s
 
 
 MARS:
-```
+
+```Haskell
 java -jar Mars4_4.jar
 ```
 En MARS es necesario ejecutarlo mediante el comando anterior para que podamos acceder a MARS y entonces podamos abrir el archivo .asm que deseemos ejecutar.
@@ -44,13 +46,14 @@ A continuacion un ejemplo sobre como se compila y ejecuta un archivo .asm en MAR
 En las practicas tambien llegamos a usar el lenguaje de programacion C, para ello se empleo el compilador [GCC](https://gcc.gnu.org/), para compilar un archivo .c basta con ejecutar el siguiente comando:
 
 C :
-```
+
+```Haskell
 gcc -o nombre_ejecutable nombre_archivo.c
 ```
 
 Para ejecutar el archivo compilado basta con ejecutar el siguiente comando:
 
-```
+```Haskell
 ./nombre_ejecutable
 ```
 
