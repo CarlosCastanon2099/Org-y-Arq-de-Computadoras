@@ -17,13 +17,13 @@ Carlos Emilio Castañon Maldonado ~ Pablo César Navarro Santana
 
 - Compilar mediante:
 
-```
+```Haskell
 gcc -o Practica4 Practica4.c -lm
 ```
 
 - Una vez compilado ejecutar el programa mediante la estructura:
 
-```
+```Haskell
 ./Practica4 [arg1] [arg2] [bandera]
 ```
 - Teniendo que las banderas estan dadas por un conjunto de tres ceros/unos, estas son las opciones de las operaciones a calcular: 
@@ -40,15 +40,15 @@ representaran los operandos en binario.
 
 - Teniendo por consiguiente los siguientes ejemplos de uso:
 
-```
+```Haskell
 ./Practica4 00111111100000000000000000000000  00111111100000000000000000000000 000
 ```
 
-```
+```Haskell
 ./Practica4 00111111100000000000000000000000  00111111100000001000000000000000 001
 ```
 
-```
+```Haskell
 ./Practica4 00111111100000000000000010000000  00111111100001000000000000000000 010
 ```
 
