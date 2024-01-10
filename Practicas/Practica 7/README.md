@@ -26,19 +26,19 @@ Para el ejercicio 1  el cual realiza la exponenciacion de a^b
 
 - Al ejecutar nuestro programa, se desplegara el siguiente mensaje:
   
-```
+```Haskell
 Ingrese el valor de a: 
 ```
 
 - Seguido de: 
   
-```
+```Haskell
 Ingrese el valor de b: 
 ```
   
 - A lo que por consiguiente tendremos el siguientes ejemplo de uso:
 
-```
+```Haskell
 Ingrese el valor de a: 4
   
 Ingrese el valor de b: 5
@@ -52,19 +52,19 @@ Para el ejercicio 2  el cual calcula el coeficiente binomial de n en k
 
 - Al ejecutar nuestro programa, se desplegara el siguiente mensaje:
   
-```
+```Haskell
 Introduce un valor de n: 
 ```
 
 - Seguido de: 
   
-```
+```Haskell
 Introduce un valor de k: 
 ```
   
 - A lo que por consiguiente tendremos el siguientes ejemplo de uso:
 
-```
+```Haskell
 Introduce un valor de n: 10
   
 Introduce un valor de k: 4
@@ -79,31 +79,31 @@ La identidad de Pascal es: 210
 
 - Compilar mediante:
 
-```
+```Haskell
 gcc -o Practica7 Practica7.c -lm
 ```
 
 - Una vez compilado, ejecutar el programa mediante:
 
-```
+```Haskell
 ./Practica7
 ```
 - Una vez compilado se nos desplegara lo siguiente:
   
   
-```
+```Haskell
 Introduce un valor de n: 
 ```
 
 - Seguido de:
   
-```
+```Haskell
 Introduce un valor de k: 
 ```
   
 - A lo que por consiguiente tendremos el siguiente ejemplo de uso:
 
-```
+```Haskell
 > ./Practica7
 Introduce un valor de n: 11
 Introduce un valor de k: 5
