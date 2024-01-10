@@ -24,7 +24,7 @@
 
 - Al compilar nuestro programa, se desplegara el siguiente mensaje:
   
-```
+```Haskell
 Inserte el comando aquí o veras!:
 ```
 - Una vez que estemos aquí, podremos invocar libremente alguno de nuestros comandos que describiremos a continuacion:
@@ -47,29 +47,29 @@ Inserte el comando aquí o veras!:
   
 - Ejemplos de uso:
   
-```
+```Haskell
 Inserte el comando aquí o veras!: song
   
 Comando aceptado!!!
 [Empieza a sonar por 25 segundos la mejor melodia que ha dado internet] 
 ```
   
-```
+```Haskell
 Inserte el comando aquí o veras!: joke
   
 Comando aceptado!!!
 A veces es mejor caminar de pie, porque acostado no se puede ):
 ```
 
-```
+```Haskell
 Inserte el comando aquí o veras!: music
   
 Comando aceptado!!!
-https://www.youtube.com/watch?v=8SbUC-UaAxE
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ```
 
   
-```
+```Haskell
 Inserte el comando aquí o veras!: random
   
 Comando aceptado!!!
@@ -78,7 +78,7 @@ El comando random es: [Nombre del comando invocado]
 ```
   
   
-```
+```C++
 Inserte el comando aquí o veras!: maxwell
   
 Comando aceptado!!!
