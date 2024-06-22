@@ -53,7 +53,7 @@ María Ximena Lezama Hérnandez ~  Sara Doris Montes Incin ~  Ricardo Enrique P�
 [issues-shield]: https://img.shields.io/github/issues/CarlosCastanon2099/Org-y-Arq-de-Computadoras.svg?style=for-the-badge
 [issues-url]: https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/issues
 [license-shield]: https://img.shields.io/github/license/CarlosCastanon2099/Org-y-Arq-de-Computadoras.svg?style=for-the-badge
-[license-url]: https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/master/LICENSE.txt
+[license-url]: https://github.com/CarlosCastanon2099/Org-y-Arq-de-Computadoras/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
